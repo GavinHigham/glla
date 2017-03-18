@@ -1,26 +1,7 @@
-#include "glla.h"
+#include <stdio.h>
 #include <math.h> //sqrt, sin, cos
 #include <string.h> //memcpy
-
-vec3 vec3_add(vec3 a, vec3 b)
-{
-	return a + b;
-}
-
-vec3 vec3_sub(vec3 a, vec3 b)
-{
-	return a - b;
-}
-
-vec3 vec3_scale(vec3 a, float b)
-{
-	return a * b;
-}
-
-vec3 vec3_neg(vec3 a)
-{
-	return -a;
-}
+#include "glla.h"
 
 vec3 vec3_normalize(vec3 a)
 {
@@ -62,6 +43,72 @@ void vec3_unpack(float out[3], vec3 in)
 	out[0] = in.x;
 	out[1] = in.y;
 	out[2] = in.z;
+}
+
+void vec3_print(vec3 a)
+{
+	printf("{%f, %f, %f}", a.x, a.y, a.z);
+}
+
+void vec3_printf(char *fmt, vec3 a)
+{
+	char format[strlen(fmt) * 3 + 7]; //2 braces + 2 commas + 2 spaces + 1 newline = 7
+	sprintf(format, "{%s, %s, %s}", fmt, fmt, fmt);
+	printf(format, a.x, a.y, a.z);
+}
+
+dvec3 dvec3_normalize(dvec3 a)
+{
+	return a/dvec3_mag(a);
+}
+
+dvec3 dvec3_cross(dvec3 u, dvec3 v)
+{
+	return (dvec3){u.y*v.z-u.z*v.y, u.z*v.x-u.x*v.z, u.x*v.y-u.y*v.x};
+}
+
+dvec3 dvec3_lerp(dvec3 a, dvec3 b, double alpha)
+{
+	return ((1 - alpha) * a) + (alpha * b);
+}
+
+float dvec3_dot(dvec3 u, dvec3 v)
+{
+	return dvec3_sum(u * v);
+}
+
+float dvec3_mag(dvec3 a)
+{
+	return sqrt(dvec3_sum(a * a));
+}
+
+float dvec3_dist(dvec3 a, dvec3 b)
+{
+	return dvec3_mag(a - b);
+}
+
+float dvec3_sum(dvec3 a)
+{
+	return a.x + a.y + a.z;
+}
+
+void dvec3_unpack(double out[3], dvec3 in)
+{
+	out[0] = in.x;
+	out[1] = in.y;
+	out[2] = in.z;
+}
+
+void dvec3_print(dvec3 a)
+{
+	printf("{%lf, %lf, %lf}", a.x, a.y, a.z);
+}
+
+void dvec3_printf(char *fmt, dvec3 a)
+{
+	char format[strlen(fmt) * 3 + 7]; //2 braces + 2 commas + 2 spaces + 1 newline = 7
+	sprintf(format, "{%s, %s, %s}", fmt, fmt, fmt);
+	printf(format, a.x, a.y, a.z);
 }
 
 mat3 mat3_mult(mat3 a, mat3 b)

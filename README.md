@@ -31,7 +31,7 @@ Using Clang's vector extensions, components can be accessed similar to GLSL:
 
 GLLA does not use any operator overloading, except as provided by Clang's vector extensions. Algebra is performed by calling functions on the defined types, passed by value. Functions return by value as well.
 
-	vec3 v3 = vec3_scale(v1, 5.0);
+	vec3 v3 = vec3_lerp(v1, v2, 0.5);
 	vec3 normal = vec3_cross(v3 - v1, v2 - v1);
 	normal = vec3_normalize(normal);
     
@@ -48,7 +48,8 @@ The library is just one header file and one source file. You can simply copy it 
 	
 Then you can use it in any future project by prepending this to your C source files:
 
-	#include <glla.h>
+	#include "glla.h"
+
 	
 and compiling with the flags:
 

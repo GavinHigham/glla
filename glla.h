@@ -1,8 +1,8 @@
 #ifndef GLLA_H
 #define GLLA_H
 
-//typedef float vec3 __attribute__((ext_vector_type(3)));
 typedef float vec3 __attribute__((ext_vector_type(3)));
+typedef double dvec3 __attribute__((ext_vector_type(3)));
 
 typedef struct matrix3 {
 	vec3 rows[3];
@@ -15,31 +15,6 @@ typedef struct affine_matrix4 {
 
 #define MAT3_IDENT {{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}}
 #define AMAT4_IDENT {MAT3_IDENT, {0.0, 0.0, 0.0}}
-
-//
-//
-//BEGIN LEGACY. These four functions are just to bridge the gap until I update the engine to use Clang vector syntax.
-//
-//
-
-//Returns a new vector that represents the addition of respective components of a and b.
-//(a + b)
-vec3 vec3_add(vec3 a, vec3 b) __attribute__ ((const));
-//Returns a new vector that represents the subtraction of respective components of a and b.
-//(a - b)
-vec3 vec3_sub(vec3 a, vec3 b) __attribute__ ((const));
-//Returns a new vector that represents the scaling of a by factor b.
-//(a * b)
-vec3 vec3_scale(vec3 a, float b) __attribute__ ((const));
-//Returns a new vector that represents the negation of each component of a.
-//(-a)
-vec3 vec3_neg(vec3 a) __attribute__ ((const));
-
-//
-//
-//END LEGACY
-//
-//
 
 //Unpack a vec3, which might be larger than 3 floats because of alignment, into an array of 3 floats.
 void vec3_unpack(float out[3], vec3 in);
@@ -58,6 +33,32 @@ float vec3_mag(vec3 a) __attribute__ ((const));
 float vec3_dist(vec3 a, vec3 b) __attribute__ ((const));
 //Return the sum of the components of a.
 float vec3_sum(vec3 a) __attribute__ ((const));
+//Prints a vec3 like so: "{x, y, z}" (no newline).
+void vec3_print(vec3 a);
+//Prints a vec3 like so: "{x, y, z}" (no newline). Takes a printf format for printing each float.
+void vec3_printf(char *fmt, vec3 a);
+
+//Unpack a dvec3, which might be larger than 3 doubles because of alignment, into an array of 3 doubles.
+void dvec3_unpack(double out[3], dvec3 in);
+//Returns a new vector pointing in the same direction which has been normalized (magnitude set to 1.0)
+dvec3 dvec3_normalize(dvec3 a) __attribute__ ((const));
+//Returns a new vector that represents the cross product of a and b.
+dvec3 dvec3_cross(dvec3 a, dvec3 b) __attribute__ ((const));
+//Returns a new vector that is linearly interpolated between a and by by parameter alpha.
+//(a*alpha + b*(1 - alpha)
+dvec3 dvec3_lerp(dvec3 a, dvec3 b, double alpha) __attribute__ ((const));
+//Return the dot product of a and b.
+float dvec3_dot(dvec3 a, dvec3 b) __attribute__ ((const));
+//Return the magnitude of a.
+float dvec3_mag(dvec3 a) __attribute__ ((const));
+//Return the distance between a and b.
+float dvec3_dist(dvec3 a, dvec3 b) __attribute__ ((const));
+//Return the sum of the components of a.
+float dvec3_sum(dvec3 a) __attribute__ ((const));
+//Prints a dvec3 like so: "{x, y, z}" (no newline).
+void dvec3_print(dvec3 a);
+//Prints a dvec3 like so: "{x, y, z}" (no newline). Takes a printf format for printing each float.
+void dvec3_printf(char *fmt, dvec3 a);
 
 //Create a new mat3 from an array of floats. Row-major order.
 mat3 mat3_from_array(float *array) __attribute__ ((const));
