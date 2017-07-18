@@ -50,6 +50,11 @@ void vec3_print(vec3 a)
 	printf("{%f, %f, %f}", a.x, a.y, a.z);
 }
 
+void vec3_println(vec3 a)
+{
+	printf("{%f, %f, %f}\n", a.x, a.y, a.z);
+}
+
 void vec3_printf(char *fmt, vec3 a)
 {
 	char format[strlen(fmt) * 3 + 7]; //2 braces + 2 commas + 2 spaces + 1 newline = 7
@@ -109,6 +114,30 @@ void dvec3_printf(char *fmt, dvec3 a)
 	char format[strlen(fmt) * 3 + 7]; //2 braces + 2 commas + 2 spaces + 1 newline = 7
 	sprintf(format, "{%s, %s, %s}", fmt, fmt, fmt);
 	printf(format, a.x, a.y, a.z);
+}
+
+void qvec3_print(qvec3 b)
+{
+	printf("[%lli, %lli, %lli]", b.x, b.y, b.z);
+}
+
+void qvec3_println(qvec3 b)
+{
+	printf("[%lli, %lli, %lli]\n", b.x, b.y, b.z);
+}
+
+void qvec3_printf(char *fmt, qvec3 b)
+{
+	char format[strlen(fmt) * 3 + 7]; //2 braces + 2 commas + 2 spaces + 1 newline = 7
+	sprintf(format, "{%s, %s, %s}", fmt, fmt, fmt);
+	printf(format, b.x, b.y, b.z);
+}
+
+void svec3_unpack(int16_t out[3], svec3 in)
+{
+	out[0] = in.x;
+	out[1] = in.y;
+	out[2] = in.z;
 }
 
 mat3 mat3_mult(mat3 a, mat3 b)

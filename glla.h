@@ -1,8 +1,11 @@
 #ifndef GLLA_H
 #define GLLA_H
+#include <inttypes.h>
 
 typedef float vec3 __attribute__((ext_vector_type(3)));
 typedef double dvec3 __attribute__((ext_vector_type(3)));
+typedef int64_t qvec3 __attribute__((ext_vector_type(3)));
+typedef int16_t svec3 __attribute__((ext_vector_type(3)));
 
 typedef struct matrix3 {
 	vec3 rows[3];
@@ -35,6 +38,8 @@ float vec3_dist(vec3 a, vec3 b) __attribute__ ((const));
 float vec3_sum(vec3 a) __attribute__ ((const));
 //Prints a vec3 like so: "{x, y, z}" (no newline).
 void vec3_print(vec3 a);
+//Prints a vec3 like so: "{x, y, z}" (with newline).
+void vec3_println(vec3 a);
 //Prints a vec3 like so: "{x, y, z}" (no newline). Takes a printf format for printing each float.
 void vec3_printf(char *fmt, vec3 a);
 
@@ -59,6 +64,16 @@ float dvec3_sum(dvec3 a) __attribute__ ((const));
 void dvec3_print(dvec3 a);
 //Prints a dvec3 like so: "{x, y, z}" (no newline). Takes a printf format for printing each float.
 void dvec3_printf(char *fmt, dvec3 a);
+
+//Prints a qvec3 origin like so: "[x, y, z]" (no newline).
+void qvec3_print(qvec3 b);
+//Prints a qvec3 origin like so: "[x, y, z]".
+void qvec3_println(qvec3 b);
+//Prints a qvec3 origin like so: "[x, y, z]" (no newline). Takes a printf format for printing each int64.
+void qvec3_printf(char *fmt, qvec3 b);
+
+//Unpack a svec3, which might be larger than 3 int16_t because of alignment, into an array of 3 int16_t.
+void svec3_unpack(int16_t out[3], svec3 in);
 
 //Create a new mat3 from an array of floats. Row-major order.
 mat3 mat3_from_array(float *array) __attribute__ ((const));

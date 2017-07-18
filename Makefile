@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -c -std=c99 -O3
+CFLAGS = -Wall -c -std=c11 -O3
 OBJECTS = glla.o
 RED   = '\033[0;31m'
 GREEN = '\033[0;32m'
