@@ -1,19 +1,19 @@
-##GLLA##
+## GLLA ##
 
 
 GLLA (GL Linear Algebra) is a small C11 static library that provides types and functions for a 3-vector, a 3x3-matrix, and a 4x4 affine matrix. It is written to be exceedingly clear in both implementation and usage.
 
-####vec3####
+#### vec3 ####
 This type is a 3-component float vector, using Clang's vector extensions.
 
 Some of the usual vec3 linear algebra functions which Clang does not provide have been implemented.
 
-####mat3####
+#### mat3 ####
 This type is a struct wrapper around an array of 3 vec3 vectors, to allow for easy assignment.
 
 Some of the usual mat3 linear algebra functions have been implemented.
 
-####amat4####
+#### amat4 ####
 This type is a struct wrapper around a mat3 (upper-left 3x3 matrix) and a vec3 (first three components of the last column).
 
 Since it represents an affine 4x4 matrix, all provided amat4 functions behave as if the last row is <0, 0, 0, 1>, without actually carrying that data around. Where possible, operations which would multiply by zero have been exploited to reduce computation.
@@ -22,7 +22,7 @@ Access the upper-left inner mat3 with .a
 
 Access the first three elements of the final column as a vec3 with .t
 
-###Example Usage###
+### Example Usage ###
 
 Using Clang's vector extensions, components can be accessed similar to GLSL:
 
@@ -41,7 +41,7 @@ For computer graphics, you can quickly and efficiently compose affine frames by 
 	amat4 eye_frame = {.t = (vec3){0.0, 1.0, 5.0}};
 	eye_frame.a = mat3_lookat(eye_frame.t, eye_target, (vec3){0, 1, 0});
 	
-###Compiling and Installing###
+### Compiling and Installing ###
 The library is just one header file and one source file. You can simply copy it into your project if you like. Alternatively, you can use the provided Makefile to compile and install the library into your /usr/local/lib/ and /usr/local/include/ folders with this command:
 
 	make install
@@ -55,7 +55,7 @@ and compiling with the flags:
 
 	-L/usr/local/lib/ -lglla
 	
-###Motivation###
+### Motivation ###
 
 I wrote a prior linear algebra library, glalgebra, in the course of making a 3D game engine in C (still a work in progress). I did not like the syntax used for other linear algebra libraries, so I made my own, which seems to be a rite of passage among people who write their own game engines.
 
