@@ -116,6 +116,11 @@ void dvec3_printf(char *fmt, dvec3 a)
 	printf(format, a.x, a.y, a.z);
 }
 
+int64_t qvec3_sum(qvec3 a)
+{
+	return a.x + a.y + a.z;
+}
+
 void qvec3_print(qvec3 b)
 {
 	printf("[%lli, %lli, %lli]", b.x, b.y, b.z);

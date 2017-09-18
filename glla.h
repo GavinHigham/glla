@@ -5,6 +5,7 @@
 typedef float vec3 __attribute__((ext_vector_type(3)));
 typedef double dvec3 __attribute__((ext_vector_type(3)));
 typedef int64_t qvec3 __attribute__((ext_vector_type(3)));
+typedef int32_t ivec3 __attribute__((ext_vector_type(3)));
 typedef int16_t svec3 __attribute__((ext_vector_type(3)));
 
 typedef struct matrix3 {
@@ -65,6 +66,8 @@ void dvec3_print(dvec3 a);
 //Prints a dvec3 like so: "{x, y, z}" (no newline). Takes a printf format for printing each float.
 void dvec3_printf(char *fmt, dvec3 a);
 
+//Return the sum of the components of a. Could overflow!
+int64_t qvec3_sum(qvec3 a);
 //Prints a qvec3 origin like so: "[x, y, z]" (no newline).
 void qvec3_print(qvec3 b);
 //Prints a qvec3 origin like so: "[x, y, z]".
