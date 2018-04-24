@@ -384,3 +384,36 @@ void amat4_buf_mat_mult(float * restrict a, amat4 b, float * restrict out)
 	amat4_to_array(b, tmp);
 	amat4_buf_mult(a, tmp, out);
 }
+
+vec3 amat4_buf_multpoint(float *a, float *b, float *out)
+{
+	float tmp[4];
+	for (int i = 0; i < 4; i++)
+		tmp[i] = a[4*i+0]*b[0] + a[4*i+1]*b[1] + a[4*i+2]*b[2] + a[4*i+3]*b[3];
+	if (out)
+		memcpy(out, tmp, 4*sizeof(float));
+	return (vec3){tmp[0], tmp[1], tmp[2]};
+}
+
+void amat4_print(amat4 a)
+{
+#define mrow(v, f) v[0], v[1], v[2], f
+	vec3 *r = a.a.rows;
+	printf("%f, %f, %f, %f\n%f, %f, %f, %f\n%f, %f, %f, %f\n%f, %f, %f, %f\n",
+		mrow(r[0], a.t[0]),
+		mrow(r[1], a.t[1]),
+		mrow(r[2], a.t[2]),
+		0.0, 0.0, 0.0, 1.0);
+#undef mrow
+}
+
+void amat4_buf_print(float *a)
+{
+#define mrow(a, r) a[4*r], a[4*r+1], a[4*r+2], a[4*r+3]
+	printf("%f, %f, %f, %f\n%f, %f, %f, %f\n%f, %f, %f, %f\n%f, %f, %f, %f\n",
+		mrow(a, 0),
+		mrow(a, 1),
+		mrow(a, 2),
+		mrow(a, 3));
+#undef mrow
+}

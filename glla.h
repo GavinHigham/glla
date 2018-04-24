@@ -3,6 +3,7 @@
 #include <inttypes.h>
 
 typedef float vec3 __attribute__((ext_vector_type(3)));
+typedef float vec4 __attribute__((ext_vector_type(4)));
 typedef double dvec3 __attribute__((ext_vector_type(3)));
 typedef int64_t qvec3 __attribute__((ext_vector_type(3)));
 typedef int32_t ivec3 __attribute__((ext_vector_type(3)));
@@ -153,5 +154,14 @@ void amat4_amat_buf_mult(amat4 a, float * restrict b, float * restrict out);
 //a and out should represent 4x4 row-major matrices, as arrays of floats.
 //a and out must all be different 16-float buffers, or the behaviour of this function is undefined.
 void amat4_buf_amat_mult(float * restrict a, amat4 b, float * restrict out);
+//Multiply the 4x4 row-major matrix a by the column vector b and return a new vector.
+//b is implied to be a 4-vec with the form <x, y, z, 1>
+//a should be an array of 16 floats.
+vec3 amat4_buf_multpoint(float *a, float *b, float *out);
+//Prints an amat4, row by row.
+void amat4_print(amat4 a);
+//Prints an array of 16 floats, row by row.
+void amat4_buf_print(float *a);
+
 
 #endif
