@@ -62,13 +62,32 @@ float dvec3_mag(dvec3 a) __attribute__ ((const));
 float dvec3_dist(dvec3 a, dvec3 b) __attribute__ ((const));
 //Return the sum of the components of a.
 float dvec3_sum(dvec3 a) __attribute__ ((const));
+//Return the sum of the components of a.
+double dvec3_sumd(dvec3 a) __attribute__ ((const));
 //Prints a dvec3 like so: "{x, y, z}" (no newline).
 void dvec3_print(dvec3 a);
 //Prints a dvec3 like so: "{x, y, z}" (no newline). Takes a printf format for printing each float.
 void dvec3_printf(char *fmt, dvec3 a);
 
+//Return the magnitude of a as a float.
+float ivec3_magf(ivec3 a) __attribute__ ((const));
+//Return the distance between a and b.
+float ivec3_distf(ivec3 a, ivec3 b) __attribute__ ((const));
+//Return the sum of the components of a.
+int64_t ivec3_sumd(ivec3 a) __attribute__ ((const));
+
+//Return the magnitude of a as a float.
+float qvec3_magf(qvec3 a) __attribute__ ((const));
+//Return the magnitude of a as a double.
+double qvec3_magd(qvec3 a) __attribute__ ((const));
+//Return the distance between a and b.
+float qvec3_distf(qvec3 a, qvec3 b) __attribute__ ((const));
+//Return the distance between a and b.
+double qvec3_distd(qvec3 a, qvec3 b) __attribute__ ((const));
 //Return the sum of the components of a. Could overflow!
-int64_t qvec3_sum(qvec3 a);
+int64_t qvec3_sum(qvec3 a) __attribute__ ((const));
+//Return the sum of the components of a. Could lose precision!
+double qvec3_sumd(qvec3 a) __attribute__ ((const));
 //Prints a qvec3 origin like so: "[x, y, z]" (no newline).
 void qvec3_print(qvec3 b);
 //Prints a qvec3 origin like so: "[x, y, z]".
@@ -106,6 +125,12 @@ mat3 mat3_scalemat(float x, float y, float z) __attribute__ ((const));
 mat3 mat3_transp(mat3 a) __attribute__ ((const));
 //Produce a rotation matrix that will look from p to q, with u up.
 mat3 mat3_lookat(vec3 p, vec3 q, vec3 u) __attribute__ ((const));
+//Copy a into a buffer representing a true 3x3 row-major matrix.
+//The buffer should be large enough to store 9 floats.
+void mat3_to_array(mat3 a, float *buf);
+//Copy a into a buffer representing a true 3x3 column-major matrix.
+//The buffer should be large enough to store 9 floats.
+void mat3_to_array_cm(mat3 a, float *buf);
 //Takes a mat3 and a vec3, and copies them into a buffer representing a true, row-major 4x4 matrix.
 //a becomes the rotation portion, and b becomes the translation.
 void mat3_vec3_to_array(mat3 a, vec3 b, float *buf) __attribute__ ((const));

@@ -97,6 +97,11 @@ float dvec3_sum(dvec3 a)
 	return a.x + a.y + a.z;
 }
 
+double dvec3_sumd(dvec3 a)
+{
+	return a.x + a.y + a.z;
+}
+
 void dvec3_unpack(double out[3], dvec3 in)
 {
 	out[0] = in.x;
@@ -116,9 +121,50 @@ void dvec3_printf(char *fmt, dvec3 a)
 	printf(format, a.x, a.y, a.z);
 }
 
+int64_t ivec3_sumd(ivec3 a)
+{
+	return a.x + a.y + a.z;
+}
+
+float ivec3_magf(ivec3 a)
+{
+	return sqrt(ivec3_sumd(a * a));
+}
+
+float ivec3_distf(ivec3 a, ivec3 b)
+{
+	return ivec3_magf(a - b);
+}
+
+float qvec3_magf(qvec3 a)
+{
+	return sqrt(qvec3_sum(a * a));
+}
+
+double qvec3_magd(qvec3 a)
+{
+	dvec3 tmp = {a.x, a.y, a.z};
+	return sqrt(dvec3_sumd(tmp * tmp));
+}
+
+float qvec3_distf(qvec3 a, qvec3 b)
+{
+	return qvec3_magf(a - b);
+}
+
+double qvec3_distd(qvec3 a, qvec3 b)
+{
+	return qvec3_magd(a - b);
+}
+
 int64_t qvec3_sum(qvec3 a)
 {
 	return a.x + a.y + a.z;
+}
+
+double qvec3_sumd(qvec3 a)
+{
+	return (double)a.x + (double)a.y + (double)a.z;
 }
 
 void qvec3_print(qvec3 b)
@@ -269,6 +315,26 @@ mat3 mat3_lookat(vec3 p, vec3 q, vec3 u)
 		{x.y, y.y, z.y},
 		{x.z, y.z, z.z}
 	}};
+}
+
+void mat3_to_array(mat3 a, float *buf)
+{
+	float tmp[] = {
+		a.rows[0].x, a.rows[0].y, a.rows[0].z,
+		a.rows[1].x, a.rows[1].y, a.rows[1].z,
+		a.rows[2].x, a.rows[2].y, a.rows[2].z
+	};
+	memcpy(buf, tmp, sizeof(tmp));
+}
+
+void mat3_to_array_cm(mat3 a, float *buf)
+{
+	float tmp[] = {
+		a.rows[0].x, a.rows[1].x, a.rows[2].x,
+		a.rows[0].y, a.rows[1].y, a.rows[2].y,
+		a.rows[0].z, a.rows[1].z, a.rows[2].z
+	};
+	memcpy(buf, tmp, sizeof(tmp));
 }
 
 void mat3_vec3_to_array(mat3 a, vec3 b, float *buf)
