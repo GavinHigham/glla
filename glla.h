@@ -2,6 +2,7 @@
 #define GLLA_H
 #include <inttypes.h>
 
+typedef float vec2 __attribute__((ext_vector_type(2)));
 typedef float vec3 __attribute__((ext_vector_type(3)));
 typedef float vec4 __attribute__((ext_vector_type(4)));
 typedef double dvec3 __attribute__((ext_vector_type(3)));
