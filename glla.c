@@ -3,6 +3,16 @@
 #include <string.h> //memcpy
 #include "glla.h"
 
+float vec2_sum(vec2 a)
+{
+	return a.x + a.y;
+}
+
+float vec2_dot(vec2 u, vec2 v)
+{
+	return vec2_sum(u * v);
+}
+
 vec3 vec3_normalize(vec3 a)
 {
 	return a/vec3_mag(a);
@@ -191,6 +201,16 @@ void svec3_unpack(int16_t out[3], svec3 in)
 	out[2] = in.z;
 }
 
+float vec4_sum(vec4 a)
+{
+	return a.x + a.y + a.z + a.w;
+}
+
+float vec4_dot(vec4 u, vec4 v)
+{
+	return vec4_sum(u * v);
+}
+
 mat3 mat3_mult(mat3 a, mat3 b)
 {
 	return (mat3)
@@ -348,6 +368,27 @@ void mat3_vec3_to_array(mat3 a, vec3 b, float *buf)
 	memcpy(buf, tmp, sizeof(tmp));
 }
 
+void mat3_print(mat3 a)
+{
+#define mrow(v) v[0], v[1], v[2]
+	vec3 *r = a.rows;
+	printf("%f, %f, %f\n%f, %f, %f\n%f, %f, %f\n",
+		mrow(r[0]),
+		mrow(r[1]),
+		mrow(r[2]));
+#undef mrow
+}
+
+void mat3_buf_print(float *a)
+{
+#define mrow(a, r) a[3*r], a[3*r+1], a[3*r+2]
+	printf("%f, %f, %f\n%f, %f, %f\n%f, %f, %f\n",
+		mrow(a, 0),
+		mrow(a, 1),
+		mrow(a, 2));
+#undef mrow
+}
+
 amat4 amat4_mult(amat4 a, amat4 b)
 {
 	return (amat4){
@@ -412,6 +453,7 @@ amat4 amat4_rotmat_lomult(float ux, float uy, float uz, float s, float c)
 	};
 }
 
+//"Fake" inverse, only handles translation and rotation (but cheap!)
 amat4 amat4_inverse(amat4 a)
 {
 	return (amat4){

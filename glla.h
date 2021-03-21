@@ -22,6 +22,11 @@ typedef struct affine_matrix4 {
 #define MAT3_IDENT {{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}}
 #define AMAT4_IDENT {MAT3_IDENT, {0.0, 0.0, 0.0}}
 
+//Return the dot product of a and b.
+float vec2_dot(vec2 a, vec2 b);
+//Return the sum of the components of a.
+float vec2_sum(vec2 a);
+
 //Unpack a vec3, which might be larger than 3 floats because of alignment, into an array of 3 floats.
 void vec3_unpack(float out[3], vec3 in);
 //Returns a new vector pointing in the same direction which has been normalized (magnitude set to 1.0)
@@ -99,6 +104,11 @@ void qvec3_printf(char *fmt, qvec3 b);
 //Unpack a svec3, which might be larger than 3 int16_t because of alignment, into an array of 3 int16_t.
 void svec3_unpack(int16_t out[3], svec3 in);
 
+//Return the dot product of a and b.
+float vec4_dot(vec4 a, vec4 b);
+//Return the sum of the components of a.
+float vec4_sum(vec4 a);
+
 //Create a new mat3 from an array of floats. Row-major order.
 mat3 mat3_from_array(float *array) __attribute__ ((const));
 //3x3 Identity matrix.
@@ -135,6 +145,11 @@ void mat3_to_array_cm(mat3 a, float *buf);
 //Takes a mat3 and a vec3, and copies them into a buffer representing a true, row-major 4x4 matrix.
 //a becomes the rotation portion, and b becomes the translation.
 void mat3_vec3_to_array(mat3 a, vec3 b, float *buf) __attribute__ ((const));
+//Prints a mat3, row by row.
+void mat3_print(mat3 a);
+//Prints an array of 9 floats, row by row.
+void mat3_buf_print(float *a);
+
 
 //Multiply a by b and return the result as a new affine matrix.
 amat4 amat4_mult(amat4 a, amat4 b) __attribute__ ((const));
