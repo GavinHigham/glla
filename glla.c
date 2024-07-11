@@ -48,6 +48,11 @@ float vec3_sum(vec3 a)
 	return a.x + a.y + a.z;
 }
 
+vec3 vec3_multmat3(vec3 a, mat3 b)
+{
+	return mat3_multvec(mat3_transp(b), a);
+}
+
 void vec3_unpack(float out[3], vec3 in)
 {
 	out[0] = in.x;
@@ -426,6 +431,29 @@ void amat4_to_array(amat4 a, float *buf)
 	memcpy(buf, tmp, sizeof(tmp));
 };
 
+float amat4_index(amat4 a, uint32_t index)
+{
+	switch (index) {
+	case 0: return a.a.rows[0].x;
+	case 1: return a.a.rows[0].y;
+	case 2: return a.a.rows[0].z;
+	case 3: return a.t.x;
+	case 4: return a.a.rows[1].x;
+	case 5: return a.a.rows[1].y;
+	case 6: return a.a.rows[1].z;
+	case 7: return a.t.y;
+	case 8: return a.a.rows[2].x;
+	case 9: return a.a.rows[2].y;
+	case 10: return a.a.rows[2].z;
+	case 11: return a.t.z;
+	case 12: return 0;
+	case 13: return 0;
+	case 14: return 0;
+	case 15: return 1;
+	default: return NAN;
+	}
+}
+
 amat4 amat4_rotmat(float ux, float uy, float uz, float s, float c)
 {
 	return (amat4){mat3_rotmat(ux, uy, uz, s, c), {0, 0, 0}};
@@ -464,6 +492,11 @@ amat4 amat4_inverse(amat4 a)
 			vec3_dot((vec3){a.a.rows[0].z, a.a.rows[1].z, a.a.rows[2].z}, -a.t)
 		}
 	};
+}
+
+amat4 amat4_lookat(vec3 p, vec3 q, vec3 u)
+{
+	return (amat4){mat3_lookat(p, q, u)};
 }
 
 void amat4_buf_mult(float * restrict a, float * restrict b, float * restrict out)

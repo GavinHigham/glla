@@ -44,6 +44,8 @@ float vec3_mag(vec3 a) __attribute__ ((const));
 float vec3_dist(vec3 a, vec3 b) __attribute__ ((const));
 //Return the sum of the components of a.
 float vec3_sum(vec3 a) __attribute__ ((const));
+//Multiply the row vector a by the matrix b.
+vec3 vec3_multmat3(vec3 a, mat3 b);
 //Prints a vec3 like so: "{x, y, z}" (no newline).
 void vec3_print(vec3 a);
 //Prints a vec3 like so: "{x, y, z}" (with newline).
@@ -171,11 +173,13 @@ amat4 amat4_rot(amat4 a, float ux, float uy, float uz, float s, float c) __attri
 //The buffer should be large enough to store 16 floats.
 //The last row will be <0, 0, 0, 1>.
 void amat4_to_array(amat4 a, float *buf);
+//Indexes a as if it were a 16-float row-major matrix, and returns the result.
+float amat4_index(amat4 a, uint32_t index);
 //Produce a rotation matrix which represents a rotation about <ux, uy, uz> by some angle.
 //s and c should be the sine and cosine of the angle, respectively.
 amat4 amat4_rotmat(float ux, float uy, float uz, float s, float c) __attribute__ ((const));
 //Produce a rotation matrix which represents a rotation about <ux, uy, uz> by angle, in radians.
-//This version tries to reduce multiplications at the cost of more interdependant local variables.
+//This version tries to reduce multiplications at the cost of more interdependent local variables.
 amat4 amat4_rotmat_lomult(float ux, float uy, float uz, float s, float c) __attribute__ ((const));
 //Produce a lookat matrix that points from point p to point q, with u as "up".
 amat4 amat4_lookat(vec3 p, vec3 q, vec3 u) __attribute__ ((const));
@@ -190,11 +194,11 @@ void amat4_buf_mult(float * restrict a, float * restrict b, float * restrict out
 //Do a true 4x4 matrix multiply between a and b, and put the result into out.
 //b and out should represent 4x4 row-major matrices, as arrays of floats.
 //b and out must all be different 16-float buffers, or the behaviour of this function is undefined.
-void amat4_amat_buf_mult(amat4 a, float * restrict b, float * restrict out);
+void amat4_mat_buf_mult(amat4 a, float * restrict b, float * restrict out);
 //Do a true 4x4 matrix multiply between a and b, and put the result into out.
 //a and out should represent 4x4 row-major matrices, as arrays of floats.
 //a and out must all be different 16-float buffers, or the behaviour of this function is undefined.
-void amat4_buf_amat_mult(float * restrict a, amat4 b, float * restrict out);
+void amat4_buf_mat_mult(float * restrict a, amat4 b, float * restrict out);
 //Multiply the 4x4 row-major matrix a by the column vector b and return a new vector.
 //b is implied to be a 4-vec with the form <x, y, z, 1>
 //a should be an array of 16 floats.
